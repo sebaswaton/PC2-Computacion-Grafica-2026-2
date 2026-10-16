@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% set pagina = 'datos' %}
+{% block titulo %}Datos · Compositor por dibujo{% endblock %}
+
+{% block contenido %}
+<h1 style="font-size:34px">Datos</h1>
+<p class="suave" style="margin-top:6px">{{ total }} dibujos en total. Meta: {{ config.metaMin }} por clase.</p>
+
+<div class="secciones-datos">
+  <section class="hoja">
+    <h2>Por clase</h2>
+    <table class="tabla-datos">
+      <thead><tr><th>Clase</th><th class="num">Dibujos</th><th>Estado</th></tr></thead>
+      <tbody>
+      {% for f in filas %}
+        <tr>
+          <td><span style="font-family:var(--fuente-musica);margin-right:8px">{{ f.simbolo }}</span>{{ f.nombre }}</td>
+          <td class="num">{{ f.total }}</td>
+          <td class="chico">{% if f.total >= config.metaMin %}<span style="color:var(--ok)">Meta cumplida</span>{% else %}Faltan {{ config.metaMin - f.total }}{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="hoja">
+    <h2>Preparar y descargar</h2>
+    <p class="chico suave">«Preparar» recorta cada dibujo, lo lleva a 32×32 y genera X.npy (imágenes),
+      y.npy (etiquetas 0–9) y autores.npy. Luego descárgalos para entrenar.</p>
+    <div class="lista-acciones">
+      <button id="btn-preparar" class="primario" type="button">Preparar dataset</button>
+    </div>
+    <pre class="resultado" id="resultado" hidden></pre>
+    <div class="lista-acciones">
+      <a class="boton" href="/X.npy">X.npy</a>
+      <a class="boton" href="/y.npy">y.npy</a>
+      <a class="boton" href="/autores.npy">autores.npy</a>
+      <a class="boton" href="/clases.json">clases.json</a>
+    </div>
+    <p class="chico suave" style="margin-top:16px">Respaldo de todos los dibujos originales (PNG). Descárgalo
+      cada noche mientras recolectan.</p>
+    <div class="lista-acciones">
+      <a class="boton" href="/descargar/datos.zip">Descargar respaldo .zip</a>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("btn-preparar").addEventListener("click", async (e) => {
+    const btn = e.currentTarget, salida = document.getElementById("resultado");
+    btn.disabled = true; btn.textContent = "Preparando…";
+    try {
+      const r = await fetch("/prepare", { method: "POST" });
+      const d = await r.json();
+      salida.textContent = `Listo: ${d.total} imágenes, forma ${JSON.stringify(d.forma_X)}\n\n` +
+        JSON.stringify(d.por_clase, null, 2) + "\n\nAutores: " + JSON.stringify(d.autores, null, 2);
+    } catch (err) {
+      salida.textContent = "No se pudo preparar: " + err.message;
+    }
+    salida.hidden = false; btn.disabled = false; btn.textContent = "Preparar dataset";
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% set pagina = 'demo' %}
+{% block titulo %}Demo · Compositor por dibujo{% endblock %}
+
+{% block contenido %}
+<div class="demo-cabeza">
+  <div>
+    <h1 style="font-size:clamp(28px,4vw,40px)">Dibuja una melodía y escúchala</h1>
+  </div>
+  <p class="suave chico" id="info-modelo">Cargando el modelo…</p>
+</div>
+
+<p class="estado-modelo" id="estado-modelo" hidden></p>
+
+<div class="pila-lienzos lienzo-demo">
+  <canvas id="pauta" class="capa" width="1200" height="320"></canvas>
+  <canvas id="dibujo" class="dibujo" width="1200" height="320" aria-label="Pentagrama para dibujar"></canvas>
+  <canvas id="anotaciones" class="capa" width="1200" height="320"></canvas>
+</div>
+
+<div class="barra-control">
+  <button id="btn-play" class="primario play" type="button">Reproducir</button>
+  <button id="btn-deshacer" type="button">Deshacer</button>
+  <button id="btn-borrar" type="button">Borrar todo</button>
+  <label class="control">Tempo
+    <input type="range" id="bpm" min="40" max="200" step="2" value="96">
+    <output id="bpm-valor">96</output> BPM
+  </label>
+  <label class="control">Confianza mínima
+    <input type="range" id="umbral" min="40" max="95" step="5" value="70">
+    <output id="umbral-valor">70</output>%
+  </label>
+  <span class="separador"></span>
+  <button id="btn-midi" type="button">Descargar MIDI</button>
+</div>
+
+<section class="reconocidos" aria-labelledby="titulo-reconocidos">
+  <h2 id="titulo-reconocidos">Lo que reconoció la red</h2>
+  <table class="tabla-simbolos">
+    <thead>
+      <tr><th></th><th>Figura</th><th>Nota o efecto</th><th>Confianza</th><th>Segunda opción</th></tr>
+    </thead>
+    <tbody id="cuerpo-tabla">
+      <tr class="vacia"><td colspan="5">Aún no hay figuras. Empieza con una clave de sol a la izquierda.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="probabilidades" aria-labelledby="titulo-probabilidades">
+  <h2 id="titulo-probabilidades">Probabilidades</h2>
+  <div class="panel-probabilidades" id="panel-probabilidades">
+    <p class="suave">Aún no hay figuras.</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='vendor/tf.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lienzo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/preprocesar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/segmentar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pentagrama.js') }}"></script>
+<script src="{{ url_for('static', filename='js/reproductor.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modelo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/demo.js') }}"></script>
+{% endblock %}

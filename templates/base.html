@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Compositor por dibujo{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Noto+Music&family=Spectral:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+  <script>window.CONFIG = {{ config | tojson }};</script>
+</head>
+<body>
+  <header class="cabecera">
+    <a class="marca" href="/"><span class="clave">&#x1D11E;</span>Compositor por dibujo</a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="/" {% if pagina == 'recolectar' %}aria-current="page"{% endif %}>Recolectar</a>
+      <a href="/demo" {% if pagina == 'demo' %}aria-current="page"{% endif %}>Demo</a>
+      <a href="/datos" {% if pagina == 'datos' %}aria-current="page"{% endif %}>Datos</a>
+    </nav>
+  </header>
+  <main>
+    {% block contenido %}{% endblock %}
+  </main>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

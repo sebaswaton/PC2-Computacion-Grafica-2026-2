@@ -1,0 +1,7 @@
+__pycache__/
+.venv/
+venv/
+.DS_Store
+originales/
+data_aumentada/
+data_aumentada_5000/

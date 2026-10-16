@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% set pagina = 'recolectar' %}
+{% block titulo %}Recolectar dibujos · Compositor por dibujo{% endblock %}
+
+{% block contenido %}
+<div class="recoleccion">
+  <section class="zona-dibujo" aria-labelledby="titulo-encargo">
+    <div class="encargo">
+      <div class="glifo" id="glifo" aria-hidden="true">&#x2669;</div>
+      <div>
+        <p class="suave chico">Dibuja una figura de</p>
+        <h1 id="titulo-encargo">…</h1>
+        <p class="consejo" id="consejo"></p>
+      </div>
+    </div>
+
+    <div class="hoja">
+      <div class="pila-lienzos lienzo-recoleccion">
+        <canvas id="pauta" class="capa" width="{{ config.lienzo }}" height="{{ config.lienzo }}"></canvas>
+        <canvas id="dibujo" class="dibujo" width="{{ config.lienzo }}" height="{{ config.lienzo }}"
+                aria-label="Lienzo de dibujo"></canvas>
+      </div>
+      <div class="acciones">
+        <button id="btn-deshacer" type="button">Deshacer trazo</button>
+        <button id="btn-borrar" type="button">Borrar</button>
+        <button id="btn-enviar" type="button" class="primario" disabled>Guardar dibujo</button>
+      </div>
+      <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
+      <div class="acciones">
+        <button id="btn-anular" type="button" class="peligro" disabled>Eliminar mi último dibujo guardado</button>
+      </div>
+      <p class="suave chico" style="text-align:center;margin-top:10px">
+        Atajo: Enter guarda, Z deshace.
+      </p>
+    </div>
+  </section>
+
+  <aside class="lateral">
+    <div class="hoja progreso">
+      <h2>Avance del dataset</h2>
+      <ol id="lista-clases"></ol>
+    </div>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lienzo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/recolectar.js') }}"></script>
+{% endblock %}

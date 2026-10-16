@@ -1,0 +1,213 @@
+{
+ "arquitectura": "cnn",
+ "origen": "real",
+ "fecha": "2026-10-16",
+ "exactitud_prueba": 0.9227,
+ "f1_macro_prueba": 0.9208,
+ "forma_entrada": [
+  32,
+  32,
+  1
+ ],
+ "clases": [
+  "redonda",
+  "blanca",
+  "negra",
+  "corchea",
+  "silencio_negra",
+  "silencio_blanca",
+  "clave_sol",
+  "clave_fa",
+  "sostenido",
+  "bemol"
+ ],
+ "capas": [
+  {
+   "tipo": "conv2d",
+   "filtros": 32,
+   "kernel": [
+    3,
+    3
+   ],
+   "paso": [
+    1,
+    1
+   ],
+   "padding": "same",
+   "activacion": "relu"
+  },
+  {
+   "tipo": "maxpool",
+   "tam": [
+    2,
+    2
+   ],
+   "paso": [
+    2,
+    2
+   ],
+   "padding": "valid"
+  },
+  {
+   "tipo": "dropout"
+  },
+  {
+   "tipo": "conv2d",
+   "filtros": 64,
+   "kernel": [
+    3,
+    3
+   ],
+   "paso": [
+    1,
+    1
+   ],
+   "padding": "same",
+   "activacion": "relu"
+  },
+  {
+   "tipo": "maxpool",
+   "tam": [
+    2,
+    2
+   ],
+   "paso": [
+    2,
+    2
+   ],
+   "padding": "valid"
+  },
+  {
+   "tipo": "dropout"
+  },
+  {
+   "tipo": "conv2d",
+   "filtros": 128,
+   "kernel": [
+    3,
+    3
+   ],
+   "paso": [
+    1,
+    1
+   ],
+   "padding": "same",
+   "activacion": "relu"
+  },
+  {
+   "tipo": "maxpool",
+   "tam": [
+    2,
+    2
+   ],
+   "paso": [
+    2,
+    2
+   ],
+   "padding": "valid"
+  },
+  {
+   "tipo": "dropout"
+  },
+  {
+   "tipo": "flatten"
+  },
+  {
+   "tipo": "dense",
+   "unidades": 128,
+   "activacion": "relu"
+  },
+  {
+   "tipo": "dropout"
+  },
+  {
+   "tipo": "dense",
+   "unidades": 10,
+   "activacion": "softmax"
+  }
+ ],
+ "pesos": [
+  {
+   "forma": [
+    3,
+    3,
+    1,
+    32
+   ],
+   "inicio": 0,
+   "cantidad": 288
+  },
+  {
+   "forma": [
+    32
+   ],
+   "inicio": 288,
+   "cantidad": 32
+  },
+  {
+   "forma": [
+    3,
+    3,
+    32,
+    64
+   ],
+   "inicio": 320,
+   "cantidad": 18432
+  },
+  {
+   "forma": [
+    64
+   ],
+   "inicio": 18752,
+   "cantidad": 64
+  },
+  {
+   "forma": [
+    3,
+    3,
+    64,
+    128
+   ],
+   "inicio": 18816,
+   "cantidad": 73728
+  },
+  {
+   "forma": [
+    128
+   ],
+   "inicio": 92544,
+   "cantidad": 128
+  },
+  {
+   "forma": [
+    2048,
+    128
+   ],
+   "inicio": 92672,
+   "cantidad": 262144
+  },
+  {
+   "forma": [
+    128
+   ],
+   "inicio": 354816,
+   "cantidad": 128
+  },
+  {
+   "forma": [
+    128,
+    10
+   ],
+   "inicio": 354944,
+   "cantidad": 1280
+  },
+  {
+   "forma": [
+    10
+   ],
+   "inicio": 356224,
+   "cantidad": 10
+  }
+ ],
+ "archivo_pesos": "pesos.bin"
+}
